@@ -50,3 +50,9 @@ Analyse des Call For Papers
 > Arguably, the digital humanities needs to support and allow multiple modes of engagement between the humanities and the digital in order to touch at the heart of the disciplines, maximize points of interaction, tackle large research and methodology challenges, and facilitate deep integration between thinking and making. This perspective would seem to be compatible with the digital humanities as a trading zone and a meeting place. Similarly, the grand challenges identified in the white papers discussed would seem to require consorted efforts. Meeting places can make suche efforts possible. Wheter mostly physical or mostly digital, they can help channel dispersed resources, technologies, and intellectual energy. Firthermore, deep integration of toolmaking and interpretative perspectives requires very different kinds of competencies and work to happen in the same space. It could aslo be argued that there is value to unexpected meeting in creative environments in terms of expanding the digital humanities.
 > p.46
 
+## Why are the digital humanities so white ?
+
+> Much of the work in the digital humanities also proceeded as if technologies from XML to databases were neutral tools.
+> p.142
+
+
