@@ -1,6 +1,9 @@
-Envisioning the Digital Humanities
-==================================
-2012 - Patrik Svensson
+---
+title: Envisioning the Digital Humanities
+category: article
+author: Patrik Svensson
+publish: 2012
+---
 
 - http://digitalhumanities.org/dhq/vol/6/1/000112/000112.html
 - http://www.readability.com/articles/f4nkdefw (+ notes in diigo)

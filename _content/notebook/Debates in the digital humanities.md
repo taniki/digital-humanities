@@ -1,4 +1,7 @@
-# Debates in the digital humanities
+---
+title: Debates in the digital humanities
+category: book
+---
 
 - [ ] Hypothesis: Is there a shift analog -> digital ?
 - [ ] Position: Why limit the shift to scholarship ?
