@@ -1,6 +1,5 @@
 ---
 title: Debates in the digital humanities
-category: book
 ---
 
 - [ ] Hypothesis: Is there a shift analog -> digital ?
