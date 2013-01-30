@@ -11,6 +11,12 @@ layout: index
 - <a href="{{ p.url }}">{{ p.title }}</a>
 {% endfor %}
 
+<h3>Thèmes</h3>
+
+{% for p in site.tags.theme %}
+- <a href="{{ p.url }}">{{ p.title }}</a>
+{% endfor %}
+
 <h2>Lectures</h2>
 
 <h3>articles</h3>
