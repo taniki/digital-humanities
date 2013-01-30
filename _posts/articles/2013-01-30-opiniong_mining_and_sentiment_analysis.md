@@ -9,4 +9,6 @@ author:
   - Bo Pang
   - Lilian Lee
 year_published: 2008
+
+category: articles
 ---

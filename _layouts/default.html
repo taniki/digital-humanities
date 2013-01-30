@@ -9,5 +9,10 @@ mon contenu :
 
 {{ content }}
 
+tags :
+
+{% for tag in page.tags %}
+- {{ tag }}
+{% endfor %}
 </body>
 </html>

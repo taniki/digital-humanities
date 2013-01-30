@@ -1,15 +1,18 @@
 ---
 title: Debates in the digital humanities
+
+category: books
 ---
 
-- [ ] Hypothesis: Is there a shift analog -> digital ?
-- [ ] Position: Why limit the shift to scholarship ?
+Todo list:
+- Hypothesis: Is there a shift analog -> digital ?
+- Position: Why limit the shift to scholarship ?
 
 ## "this is why we fight"
 
-bibliographie à chercher
-- [ ] Humanities in America (Lyne Cheney)
-- [ ] Speaking for the humanities (ACLS Report)
+Check those articles:
+- Humanities in America (Lyne Cheney)
+- Speaking for the humanities (ACLS Report)
 
 Values of digital humanities
 - Opennes
