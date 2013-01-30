@@ -7,3 +7,5 @@ Les digital humanities sont utilisées en France pour repenser l'interface entre
 source : lecture du flux twitter de marin dacos #dariah
 
 ---
+
+infrastructure technique et sociologie des professions
