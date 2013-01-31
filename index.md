@@ -7,26 +7,34 @@ layout: index
 
 <h3>Questions</h3>
 
+<ul>
 {% for p in site.tags.question %}
-- <a href="{{ p.url }}">{{ p.title }}</a>
+<li><a href="{{ p.url }}">{{ p.title }}</a></li>
 {% endfor %}
+</ul>
 
 <h3>Thèmes</h3>
 
+<ul>
 {% for p in site.tags.theme %}
-- <a href="{{ p.url }}">{{ p.title }}</a>
+<li><a href="{{ p.url }}">{{ p.title }}</a></li>
 {% endfor %}
+</ul>
 
 <h2>Lectures</h2>
 
 <h3>articles</h3>
 
+<ul>
 {% for p in site.categories.articles %}
-- <a href="{{ p.url }}">{{ p.title }}</a>
+<li><a href="{{ p.url }}">{{ p.title }}</a></li>
 {% endfor %}
+</ul>
 
 <h3>books</h3>
 
+<ul>
 {% for p in site.categories.books %}
-- <a href="{{ p.url }}">{{ p.title }}</a>
+<li><a href="{{ p.url }}">{{ p.title }}</a></li>
 {% endfor %}
+</ul>
