@@ -3,3 +3,19 @@
   display : block;
   margin : 0 auto;
 }
+
+article { 
+  margin : 72px 0;
+}
+
+article .tags {
+  position : relative;
+  width : 150px;
+  top : 27px;
+  left : -170px;
+  margin : 0;
+  text-align: right;
+  height : 0;
+}
+
+article .tags ul {  list-style-type: none; margin : 0; }

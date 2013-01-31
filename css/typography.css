@@ -4,6 +4,6 @@ article h1 { font-size: 32px; line-height: 48px; font-family: 'Museo Sans W01 30
 article h2 { font-size: 18px; line-height: 24px; margin : 48px 0px 24px 0; font-family: 'Museo Sans W01 500'; color : #3a3a3a; text-align: left; }
 article p, article ul { line-height: 24px; font-family: Alice; margin-bottom : 24px; }
 article blockquote { color : #878787; padding : 0 36px;}
-
+article .tags li { font-size : 12px; line-height: 18px; color :#bfbfbf; }
 
 ul { list-style-type: circle; margin-left : 2em; }
