@@ -5,7 +5,7 @@ layout: index
 
 <h2>Étude</h2>
 
-<h3>Questions</h3>
+<h3>questions</h3>
 
 <ul>
 {% for p in site.tags.question %}
@@ -13,7 +13,7 @@ layout: index
 {% endfor %}
 </ul>
 
-<h3>Thèmes</h3>
+<h3>thèmes</h3>
 
 <ul>
 {% for p in site.tags.theme %}
