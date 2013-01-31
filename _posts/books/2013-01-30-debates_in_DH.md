@@ -18,12 +18,15 @@ Check those articles:
 - Humanities in America (Lyne Cheney)
 - Speaking for the humanities (ACLS Report)
 
-Values of digital humanities
+Values of digital humanities:
+
 - Opennes
 - Collaboration
 - Collegiality and connectedness
 - Diversity
 - Experimentation
+
+Some DH centers:
 
 - Scholars' Lab (University of Virginia)
 - HUMLab (Umea University)
