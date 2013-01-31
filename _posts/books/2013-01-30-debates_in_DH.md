@@ -2,6 +2,7 @@
 title: Debates in the digital humanities
 
 category: books
+layout: default
 ---
 
 Todo list:
