@@ -66,5 +66,3 @@ Analyse des Call For Papers
 
 > Much of the work in the digital humanities also proceeded as if technologies from XML to databases were neutral tools.
 > p.142
-
-

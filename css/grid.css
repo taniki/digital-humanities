@@ -6,24 +6,30 @@ header {
 }
 
 header nav {
+  position: relative;
   width: 980px;
   margin : 0 auto;
 }
 
 header nav a {
   display: block;
-  width : 60px;
   height: 60px;
-  border-bottom: 3px solid #999999;
+  border-bottom: 3px solid #2B2B2B;
 }
 
-header nav a.home {
-  background-color: #9E1D43;
-  background-image: url('images/logo-cortext.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  border-color : #F772BD;
-  color : transparent;
+header nav a h1 {
+  background-color: #3C3C3C;
+  color : #EDEDED;
+}
+
+header nav a.toc {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 60px;
+  width: 60px;
+  background: #2B2B2B;
+  border-color: #0B0B0B;
 }
 
 .container {
