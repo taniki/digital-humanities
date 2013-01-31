@@ -1,0 +1,28 @@
+---
+title: publier un site web static sans CMS
+
+tags:
+  - outils
+  - publication
+  - jekyll
+  - workflow
+
+layout: default
+---
+
+Pour cette enquête et sa publicisation, nous avons poussé au minimum l'infrastructure technique en utilisant un système simple de publications par l'intermédiaire de fichiers textes au format [markdown](http://daringfireball.net/projects/markdown/syntax).
+
+## markdown
+
+## jekyll
+
+## publier des données collaborativement
+
+
+## plus d'informations
+
+Si vous souhaitez, réutiliser le thème de ce site, il vous suffira de forker le repo github [cortext/jekyll-simple-site](http://github.com/cortext/jekyll-simple-site).
+
+Des utilisations intéressantes de jekyll dans le cadre de la publication collaborative d'analyse de données :
+
+- [Developement seed : MIX Market's New Maps Portal](http://developmentseed.org/blog/2012/07/26/mix-maps-portal/) : templates génériques jekyll pour la publication + prose.io (ou éditeur de texte) pour édition + stockage sur github + calcul de l'affichage délégué au client usager

@@ -21,6 +21,14 @@ layout: index
 {% endfor %}
 </ul>
 
+<h3>outils</h3>
+
+<ul>
+{% for p in site.tags.outils %}
+<li><a href="{{ p.url }}">{{ p.title }}</a></li>
+{% endfor %}
+</ul>
+
 <h2>Lectures</h2>
 
 <h3>articles</h3>
