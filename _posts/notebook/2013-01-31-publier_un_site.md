@@ -10,14 +10,23 @@ tags:
 layout: default
 ---
 
-Pour cette enquête et sa publicisation, nous avons poussé au minimum l'infrastructure technique en utilisant un système simple de publications par l'intermédiaire de fichiers textes au format [markdown](http://daringfireball.net/projects/markdown/syntax).
+Pour cette enquête et sa publicisation, nous avons poussé au minimum l'infrastructure technique en utilisant un système simple de publications utilisant le workflow suivant :
+
+1. éditer un fichier texte
+2. le pusher sur github
+3. contempler le résultat
+
+Grâce à [prose.io](http://prose.io) l'étape 2 peut même être facultatif.
 
 ## markdown
 
+[markdown](http://daringfireball.net/projects/markdown/syntax)
+
 ## jekyll
 
-## publier des données collaborativement
+[jekyll]()
 
+## publier des données collaborativement
 
 ## plus d'informations
 
