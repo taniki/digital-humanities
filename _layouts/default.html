@@ -1,18 +1,34 @@
 <html>
 <head>
   <meta charset="utf-8">
+
+  <script type="text/javascript" src="http://fast.fonts.com/jsapi/c250570f-551c-4f0d-96f4-96e15c266cda.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Alice' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="/css/main.css">
+
   <title></title>
 </head>
 <body>
 
-mon contenu :
+<div class="container">
 
+<article class="article">
+
+<h1>{{ page.title }}</h1>
+
+<div class="content">
 {{ content }}
+</div>
 
 tags :
 
 {% for tag in page.tags %}
 - {{ tag }}
 {% endfor %}
+</article>
+
+</div>
+
 </body>
 </html>
