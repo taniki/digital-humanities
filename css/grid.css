@@ -1,3 +1,31 @@
+header {
+  display : block;
+  height : 60px;
+  background : #F6FAFE;
+  border-bottom: 3px solid #E3E3E3;
+}
+
+header nav {
+  width: 980px;
+  margin : 0 auto;
+}
+
+header nav a {
+  display: block;
+  width : 60px;
+  height: 60px;
+  border-bottom: 3px solid #999999;
+}
+
+header nav a.home {
+  background-color: #9E1D43;
+  background-image: url('images/logo-cortext.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-color : #F772BD;
+  color : transparent;
+}
+
 .container {
   width : 640px;
   display : block;
