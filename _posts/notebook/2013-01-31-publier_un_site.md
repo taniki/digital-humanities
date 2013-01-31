@@ -1,5 +1,5 @@
 ---
-title: publier un site web static sans CMS
+title: publier un site web statique dans le cadre d'une étude
 
 tags:
   - outils
@@ -26,3 +26,6 @@ Si vous souhaitez, réutiliser le thème de ce site, il vous suffira de forker l
 Des utilisations intéressantes de jekyll dans le cadre de la publication collaborative d'analyse de données :
 
 - [Developement seed : MIX Market's New Maps Portal](http://developmentseed.org/blog/2012/07/26/mix-maps-portal/) : templates génériques jekyll pour la publication + prose.io (ou éditeur de texte) pour édition + stockage sur github + calcul de l'affichage délégué au client usager
+  > We’ve put together a simple workflow for MIX to take over producing their own map sites using open source and freely available tools like the MapBox Map Site templates and Prose.io, backed up by GitHub, the new standard for managing code and the development process. MIX now has complete control of their mapping projects without needing development assistance from us, freeing them to focus their time and resources on data analysis.
+
+  the kind of workflow we love (:.
