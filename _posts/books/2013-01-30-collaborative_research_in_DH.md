@@ -6,4 +6,6 @@ author:
 year_published: 2012
 
 category: books
+
+layout: default
 ---

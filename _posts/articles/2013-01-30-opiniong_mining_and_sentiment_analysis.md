@@ -11,4 +11,6 @@ author:
 year_published: 2008
 
 category: articles
+
+layout: default
 ---

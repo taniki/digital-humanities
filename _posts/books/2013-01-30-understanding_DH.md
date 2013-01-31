@@ -5,5 +5,7 @@ year_published: 2012
 publisher: Palgrave Macmillan
 
 category: books
+
+layout: default
 ---
 

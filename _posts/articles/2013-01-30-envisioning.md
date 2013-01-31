@@ -4,6 +4,8 @@ author: Patrik Svensson
 publish: 2012
 
 category: articles
+
+layout: default
 ---
 
 - http://digitalhumanities.org/dhq/vol/6/1/000112/000112.html
