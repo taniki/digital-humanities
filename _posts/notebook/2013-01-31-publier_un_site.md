@@ -16,7 +16,7 @@ Pour cette enquête et sa publicisation, nous avons poussé au minimum l'infrast
 2. le pusher sur github
 3. contempler le résultat
 
-Grâce à [prose.io](http://prose.io) l'étape 2 peut même être facultatif.
+Grâce à [prose.io](http://prose.io) l'étape 2 peut même être facultative.
 
 ## markdown
 
