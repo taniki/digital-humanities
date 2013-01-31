@@ -6,12 +6,14 @@ layout: default
 ---
 
 Todo list:
+
 - Hypothesis: Is there a shift analog -> digital ?
 - Position: Why limit the shift to scholarship ?
 
 ## "this is why we fight"
 
 Check those articles:
+
 - Humanities in America (Lyne Cheney)
 - Speaking for the humanities (ACLS Report)
 
