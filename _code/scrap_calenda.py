@@ -2,8 +2,10 @@
 import codecs
 
 import urllib2
-from pyquery import PyQuery as pq
+import yaml
 
+from pyquery import PyQuery as pq
+# import BeautifulSoup
 
 url = "http://calenda.org/search?primary=fsubject&fsubject=298"
 
@@ -17,11 +19,26 @@ def parse_results(results):
     title = entry('.title a').html()
 
     # print a
-#    print title
+    print "%s: %s" % (a, title)
 
     f = codecs.open("dh_calenda_events/%s.md" % a, "w", "utf-8")
 
-    f.write(u'title: "%s"' % title)
+    metadata = {}
+    metadata['title'] = "%s" % title
+    metadata['permalink'] = "http://calenda.org/%s" % a
+
+    page = pq(url = metadata['permalink'])
+
+    f.write('---\n')
+    f.write(yaml.dump(metadata, default_flow_style=False))
+    f.write('---\n')
+
+    f.write( page('#resume > div').html() )
+
+    f.write('\n---\n')
+
+    f.write( page('#annonce > div').html() )
+
 
 def parse(url):
   "prelimenary parsing"
