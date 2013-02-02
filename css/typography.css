@@ -1,6 +1,8 @@
 header h1 { font-size: 20px; line-height: 60px; letter-spacing: 1px; font-family: 'Museo Sans W01 300'; color : #EDEDED; text-align: center; }
 header a { text-decoration: none; }
 
+header .toc span { font-size: 36px; line-height : 68px; width : 60px; text-align: center; display : block; color : #EDEDED; -webkit-font-smoothing: anti-aliased; }
+
 article .content { margin-top : 24px; }
 
 article h1 { font-size: 32px; line-height: 48px; font-family: 'Museo Sans W01 300'; color : #3a3a3a; text-align: center; }
