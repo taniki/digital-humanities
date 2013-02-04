@@ -33,11 +33,11 @@ def parse_results(results):
     f.write(yaml.dump(metadata, default_flow_style=False))
     f.write('---\n')
 
-    f.write( page('#resume > div').html() )
+    f.write( page('#resume > div').html().strip() )
 
     f.write('\n---\n')
 
-    f.write( page('#annonce > div').html() )
+    f.write( "\n".join([ l.strip() for l in page('#annonce > div').html().split('\n') ]) )
 
 
 def parse(url):
