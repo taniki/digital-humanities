@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 
 import codecs
@@ -42,7 +44,7 @@ def parse_results(results):
     metadata['dates'] = [ pq(d).html() for d in page('#dates ul li') ]
 
     f.write('---\n')
-    f.write(yaml.safe_dump(metadata, default_flow_style=False))
+    yaml.safe_dump(metadata, f, default_flow_style=False, encoding=('utf-8'), allow_unicode=True)
     f.write('---\n')
 
     f.write( page('#resume > div').html().strip() )
