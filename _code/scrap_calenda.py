@@ -32,7 +32,7 @@ def parse_results(results):
     metadata['keywords'] = page('#motscles ul li').html().split(', ')
 
     f.write('---\n')
-    f.write(yaml.dump(metadata, default_flow_style=False))
+    f.write(yaml.safe_dump(metadata, default_flow_style=False))
     f.write('---\n')
 
     f.write( page('#resume > div').html().strip() )
