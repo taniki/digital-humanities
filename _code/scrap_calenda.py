@@ -29,7 +29,10 @@ def parse_results(results):
 
     page = pq(url = metadata['permalink'])
 
-    metadata['keywords'] = page('#motscles ul li').html().split(', ')
+    kw = page('#motscles ul li').html()
+
+    metadata['keywords'] = kw.split(', ') if kw else []
+    metadata['dates'] = [ pq(d).html() for d in page('#dates ul li') ]
 
     f.write('---\n')
     f.write(yaml.safe_dump(metadata, default_flow_style=False))
