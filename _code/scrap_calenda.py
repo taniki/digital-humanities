@@ -29,6 +29,8 @@ def parse_results(results):
 
     page = pq(url = metadata['permalink'])
 
+    metadata['keywords'] = page('#motscles ul li').html().split(', ')
+
     f.write('---\n')
     f.write(yaml.dump(metadata, default_flow_style=False))
     f.write('---\n')
