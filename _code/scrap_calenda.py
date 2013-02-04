@@ -1,3 +1,4 @@
+import sys
 
 import codecs
 
@@ -7,7 +8,13 @@ import yaml
 from pyquery import PyQuery as pq
 # import BeautifulSoup
 
-url = "http://calenda.org/search?primary=fsubject&fsubject=298"
+try:
+  category = int( sys.argv[1] )
+except IndexError:
+  print "first argument is necessary and shoud correspond to a category id (ex: 298)"
+  exit(0)
+
+url = "http://calenda.org/search?primary=fsubject&fsubject=%i" % category
 
 target_dir = 'dh_calenda_events'
 
