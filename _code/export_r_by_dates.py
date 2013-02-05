@@ -39,7 +39,7 @@ def parse_event(f):
   for date in metadata['dates']:
     l = {}
 
-    l['date'] = time.strftime("%d-%m-%Y",parse_date(date))
+    l['date'] = time.strftime("%Y-%m-%d",parse_date(date))
     l['keywords'] = ','.join(metadata['keywords'])
     l['title'] = metadata['title']
     l['event_id'] = metadata['permalink']
