@@ -105,8 +105,7 @@ keywords.freq.top50 <- keywords.freq[ order( - keywords.freq$Freq ), ][1:50, ]
 #   horiz = TRUE
 # )
 
-ggplot(keywords.freq.top50, aes(x=Var1, y=Freq)) + geom_bar(stat = "identity")
-
+ggplot(keywords.freq.top50, aes(x=Var1, y=Freq)) + geom_bar(stat = "identity") + opts( axis.text.x = theme_text(angle = 90, hjust = 1))
 ```
 
 ### co-occurences
