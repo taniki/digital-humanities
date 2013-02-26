@@ -93,13 +93,20 @@ Pour le sport :
 ### fréquence des mots clés
 
 ```{r .width=20, fig.height=10}
-barplot(
-  keywords.freq$Freq[ order( - keywords.freq$Freq ) ][1:60],
-  names.arg = keywords.freq$Var1[ order( - keywords.freq$Freq ) ][1:60],
-  las = 2,
-  cex.names = 0.5,
-#  horiz = TRUE
-)
+library('ggplot2')
+
+keywords.freq.top50 <- keywords.freq[ order( - keywords.freq$Freq ), ][1:50, ]
+
+# barplot(
+#   keywords.freq$Freq[ order( - keywords.freq$Freq ) ][1:50],
+#   names.arg = keywords.freq$Var1[ order( - keywords.freq$Freq ) ][1:50],
+#   las = 2,
+#   cex.names = 0.5,
+#   horiz = TRUE
+# )
+
+ggplot(keywords.freq.top50, aes(x=Var1, y=Freq)) + geom_bar(stat = "identity")
+
 ```
 
 ### co-occurences
