@@ -1,0 +1,23 @@
+Une analyse des évenements en SHS en Python et R
+================================================
+
+Ce codebook a pour objectif de prédéfinir une étude sur la position des *digital humanities* dans le paysage des plateformes d'équipement méthodologiques. La question du rapport entre "humanities" américaines et "sciences humaines et sociales" (francaises et européennes) est mise temporairement de côté.
+
+Les outils que nous proposons ici sont :
+
+- une collection de textes d'annonces et d'appel à participation à des évenements ayant lieu majoritairement dans la sphère francophone. Tout le corpus sera basé sur un scrapping de [calenda](http://calenda.org). Il s'agit d'un site de référence concernant la diffusion d'événement dans le champ académique francais. Nous laissons pour plus tard l'hypothèse que les informations fournies sont insuffisantes pour mener une étude quantitative pertinente
+- une étude lexicométrique descriptive sur les mots clés fournis par les auteurs d'événements ainsi qu'une fouille de données sur les textes intégrales de présentation afin de comparé les différences lexicales et la créativité descriptive
+
+You can also embed plots, for example:
+
+```{r fig.width=7, fig.height=6}
+plot(cars)
+```
+
+## futurs
+
+- voir la différence avec l'ensemble des événements
+- produire une cartographie
+- détection des entités nommées
+
+## todo
