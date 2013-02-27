@@ -36,7 +36,7 @@ library("rjson")
 library("plyr")
 library("zoo")
  
-json_file <- "/home/tk/Dropbox/Projets/2013- digital-humanities/_code/dates_events.json"
+json_file <- "../dates_events.json"
 json_data <- fromJSON(readLines(json_file))
  
 events <-ldply(json_data, data.frame)
