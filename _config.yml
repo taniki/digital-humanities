@@ -2,5 +2,6 @@ title: "a socio-technical study of digital humanities platforms landscape"
 server: true
 auto: true
 permalink: none
+markdown: redcarpet
+pygments: false
 exclude: ["CNAME"]
-markdown : redcarpet
