@@ -1,0 +1,32 @@
+R packages you will need
+========================================================
+
+## knitr
+
+```{r}
+install.packages("knitr", dependencies=TRUE)
+```
+
+## rjson
+
+```{r}
+install.packages("rjson")
+```
+
+## plyr
+
+```{r}
+install.packages("plyr")
+```
+
+## zoo
+
+```{r}
+install.packages("zoo")
+```
+
+## ggplot2
+
+```{r}
+install.packages("ggplot2")
+```

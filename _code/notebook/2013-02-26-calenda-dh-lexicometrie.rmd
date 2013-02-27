@@ -1,5 +1,12 @@
-Une analyse des évenements en SHS en Python et R
-================================================
+---
+title: Une analyse des évenements en SHS en Python et R
+date: 2013-02-27
+
+tags:
+  - outils
+
+layout: default
+---
 
 Ce codebook a pour objectif de prédéfinir une étude sur la position des *digital humanities* dans le paysage des plateformes d'équipement méthodologiques. La question du rapport entre "humanities" américaines et "sciences humaines et sociales" (francaises et européennes) est mise temporairement de côté.
 

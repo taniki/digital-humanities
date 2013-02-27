@@ -1,5 +1,6 @@
-title: "A socio-technical study of digital humanities platforms landscape"
+title: "a socio-technical study of digital humanities platforms landscape"
 server: true
 auto: true
 permalink: none
 exclude: ["CNAME"]
+markdown : redcarpet
