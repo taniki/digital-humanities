@@ -99,8 +99,10 @@ Pour le sport :
 
 ### fréquence des mots clés
 
-```{r .width=20, fig.height=10}
+```{r}
 library('ggplot2')
+
+theme_set(theme_bw())
 
 keywords.freq.top50 <- transform(keywords.freq[ order( - keywords.freq$Freq ), ][1:50, ], Var1 = reorder(Var1, - Freq))
 
@@ -112,7 +114,9 @@ keywords.freq.top50 <- transform(keywords.freq[ order( - keywords.freq$Freq ), ]
 #   horiz = TRUE
 # )
 
-ggplot(keywords.freq.top50, aes(x=Var1, y=Freq)) + geom_bar(stat = "identity") + theme( axis.text.x = element_text(angle = 90, hjust = 1))
+ggplot( keywords.freq.top50, aes(x=Var1, y=Freq) ) +
+  geom_bar( stat = "identity" ) +
+  theme( axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5) )
 ```
 
 ### co-occurences
