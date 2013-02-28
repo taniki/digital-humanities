@@ -48,9 +48,9 @@ json_data <- fromJSON(readLines(json_file))
  
 events <-ldply(json_data, data.frame)
 events$count <- rep(1,nrow(events))
- 
+
 t <- aggregate(events$count, list(ym = format(as.Date(events$date, "%Y-%m-%d"), "%Y-%m")), sum)
- 
+
 # plot(ts(t$x, frequency=12, start = c(2004,5)))
 # format(data.frame(data = seq(as.Date("2004-05-01"), by = "1 month", to = as.Date('2013-12-31')) ), "%Y-%m")
  
@@ -71,7 +71,7 @@ head(events.count_by_month[ order( -events.count_by_month$count ), ], n = 12)
 kw <- unique(data.frame(event_id = events$event_id, keywords = events$keywords))
 kw <- subset(kw, keywords != '')
 kw <- unlist(strsplit(tolower(as.character(kw$keywords)), split = ","))
- 
+
 keywords.freq <- as.data.frame(table(unlist(kw)))
 
 # cleaning the workspace
@@ -99,12 +99,12 @@ Pour le sport :
 
 ### fréquence des mots clés
 
-```{r}
+```{r fig.height=12}
 library('ggplot2')
 
 theme_set(theme_bw())
 
-keywords.freq.top50 <- transform(keywords.freq[ order( - keywords.freq$Freq ), ][1:50, ], Var1 = reorder(Var1, - Freq))
+keywords.freq.top50 <- transform(keywords.freq[ order( - keywords.freq$Freq ), ][1:50, ], Var1 = reorder(Var1, Freq))
 
 # barplot(
 #   keywords.freq$Freq[ order( - keywords.freq$Freq ) ][1:50],
@@ -116,8 +116,19 @@ keywords.freq.top50 <- transform(keywords.freq[ order( - keywords.freq$Freq ), ]
 
 ggplot( keywords.freq.top50, aes(x=Var1, y=Freq) ) +
   geom_bar( stat = "identity" ) +
-  theme( axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5) )
+#  theme( axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5) ) +
+  coord_flip()
 ```
+
+```{r}
+keywords.month <- ddply(
+  events,
+  .(event_id, date)
+)
+
+head(keywords.month, n = 10)
+```
+
 
 ### co-occurences
 
