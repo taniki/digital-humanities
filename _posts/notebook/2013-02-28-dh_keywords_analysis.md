@@ -93,7 +93,7 @@ add_keyword <- function(row) {
     if (row$keywords != "") {
         l_ply(strsplit(as.character(row$keywords), ","), function(item) {
             keywords <<- rbind(keywords, data.frame(event_id = row$event_id, 
-                date = row$date, keyword = as.character(item)))
+                date = as.Date(row$date, "%d-%m-%Y"), keyword = tolower(as.character(item))))
         })
     }
 }
@@ -105,26 +105,26 @@ head(keywords, n = 20)
 
 ```
 ##                     event_id       date                keyword
-## 1  http://calenda.org/197623 15-10-2004          communication
-## 2  http://calenda.org/197736 30-04-2005          organisations
-## 3  http://calenda.org/197736 30-04-2005          communication
-## 4  http://calenda.org/198145 10-05-2007              éducation
-## 5  http://calenda.org/198202 15-10-2007              recherche
-## 6  http://calenda.org/198481 09-09-2008          communication
-## 7  http://calenda.org/198481 10-09-2008          communication
-## 8  http://calenda.org/198481 11-09-2008          communication
-## 9  http://calenda.org/198481 12-09-2008          communication
-## 10 http://calenda.org/198744 15-10-2009                  SFSIC
-## 11 http://calenda.org/198744 15-10-2009            information
-## 12 http://calenda.org/198744 15-10-2009          communication
-## 13 http://calenda.org/198928 15-10-2009 histoire contemporaine
-## 14 http://calenda.org/198928 15-10-2009              numérique
-## 15 http://calenda.org/198928 15-10-2009                digital
-## 16 http://calenda.org/198746 07-09-2009                  livre
-## 17 http://calenda.org/198746 07-09-2009                  ebook
-## 18 http://calenda.org/198746 07-09-2009                lecture
-## 19 http://calenda.org/198746 07-09-2009               écriture
-## 20 http://calenda.org/198746 08-09-2009                  livre
+## 1  http://calenda.org/197623 2004-10-15          communication
+## 2  http://calenda.org/197736 2005-04-30          organisations
+## 3  http://calenda.org/197736 2005-04-30          communication
+## 4  http://calenda.org/198145 2007-05-10              éducation
+## 5  http://calenda.org/198202 2007-10-15              recherche
+## 6  http://calenda.org/198481 2008-09-09          communication
+## 7  http://calenda.org/198481 2008-09-10          communication
+## 8  http://calenda.org/198481 2008-09-11          communication
+## 9  http://calenda.org/198481 2008-09-12          communication
+## 10 http://calenda.org/198744 2009-10-15                  sfsic
+## 11 http://calenda.org/198744 2009-10-15            information
+## 12 http://calenda.org/198744 2009-10-15          communication
+## 13 http://calenda.org/198928 2009-10-15 histoire contemporaine
+## 14 http://calenda.org/198928 2009-10-15              numérique
+## 15 http://calenda.org/198928 2009-10-15                digital
+## 16 http://calenda.org/198746 2009-09-07                  livre
+## 17 http://calenda.org/198746 2009-09-07                  ebook
+## 18 http://calenda.org/198746 2009-09-07                lecture
+## 19 http://calenda.org/198746 2009-09-07               écriture
+## 20 http://calenda.org/198746 2009-09-08                  livre
 ```
 
 
@@ -132,8 +132,72 @@ Que faire des mots-clés s'appliquant à des événements qui se répètent dans
 
 1. 1/(nombre de dates)
 
+
+```r
+
+weights <- as.data.frame(sapply(keywords$event_id, function(e) {
+    1/nrow(keywords[keywords$event_id == e, ])
+}))
+
+mean_date <- as.data.frame(sapply(keywords$keyword, function(e) {
+    mean(keywords[keywords$keyword == e, ]$date)
+}))
+
+keywords.aggregate <- cbind(keywords, weights)
+keywords.aggregate <- cbind(keywords.aggregate, mean_date)
+
+colnames(keywords.aggregate)[4] <- c("weight")
+colnames(keywords.aggregate)[5] <- c("mean_date")
+
+rm(mean_date, weights)
+
+head(keywords.aggregate)
+```
+
+```
+##                    event_id       date       keyword weight mean_date
+## 1 http://calenda.org/197623 2004-10-15 communication   1.00     14926
+## 2 http://calenda.org/197736 2005-04-30 organisations   0.50     12903
+## 3 http://calenda.org/197736 2005-04-30 communication   0.50     14926
+## 4 http://calenda.org/198145 2007-05-10     éducation   1.00     15310
+## 5 http://calenda.org/198202 2007-10-15     recherche   1.00     15077
+## 6 http://calenda.org/198481 2008-09-09 communication   0.25     14926
+```
+
+
+
 Cela permet de reconstituer un poid de 1 quand on fait la somme de tous les événements dans le temps.
 
 Permet également d'"étaler" le poid des évènements.
 
 Est-ce qu'on ne perd pas la "densité" ?
+
+
+```r
+library(ggplot2)
+theme_set(theme_bw())
+
+t <- keywords.aggregate[keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < 
+    as.Date("2013-12-31"), ]
+l <- levels(keywords$keyword)
+
+
+ggplot(t) + aes(x = date, y = reorder(keyword, mean_date), size = weight, color = reorder(keyword, 
+    mean_date)) + geom_point(position = "dodge") + opts(legend.position = "none")
+```
+
+```
+## 'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in
+## version 0.9.1)
+```
+
+```
+## ymax not defined: adjusting position using y instead
+```
+
+![plot of chunk distribution_overtime](figure/distribution_overtime.png) 
+
+```r
+
+rm(t)
+```
