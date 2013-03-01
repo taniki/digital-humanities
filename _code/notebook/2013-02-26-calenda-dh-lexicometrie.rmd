@@ -120,16 +120,6 @@ ggplot( keywords.freq.top50, aes(x=Var1, y=Freq) ) +
   coord_flip()
 ```
 
-```{r}
-keywords.month <- ddply(
-  events,
-  .(event_id, date)
-)
-
-head(keywords.month, n = 10)
-```
-
-
 ### co-occurences
 
 ## futurs
@@ -139,3 +129,7 @@ head(keywords.month, n = 10)
 - détection des entités nommées
 
 ## todo
+
+```{r}
+save(list = c('events'), file='calenda-dh.RData')
+```
