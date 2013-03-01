@@ -1,5 +1,5 @@
 ---
-title : dh.events : Analyse de mots clés
+title : "dh.events : Analyse de mots clés"
 
 tags:
   - r
