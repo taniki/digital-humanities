@@ -1,0 +1,96 @@
+dh.events : Analyse de mots clés
+--------------------------------
+
+## transformation des données de base
+
+Nous allons reprendre les données structurées de l'extraction des événements de calenda pour construire des jeux de données de séries temporelles et co-occurrences de mots-clés.
+
+```{r}
+load('data/calenda-dh.RData')
+
+head(events, n=12)
+```
+
+Les données sont présentées sous la forme d'une ligne par événements et la liste des mots clés dans un champ unique mais séparés par des virgules. Toute la difficulté sera donc de transformer un data frame de taille `n` en un autre data frame de description atomique des mots-clés de taille :
+
+m = somme de nombre de mots clés pour les mots événements i = 0..n
+
+Cela sera également l'occasion de se frotter un peu à la librairie [plyr](http://plyr.had.co.nz/) spécialisé dans la manipulation de données
+
+```{r}
+library("rjson")
+library("plyr")
+library("zoo")
+
+keywords <- data.frame()
+
+add_keyword <- function(row){
+  if(row$keywords != ''){
+    l_ply(
+      strsplit( as.character(row$keywords), ","),
+      function(item){
+        keywords <<- rbind(keywords,
+          data.frame(
+            event_id = row$event_id,
+            date = as.Date(row$date, "%d-%m-%Y"),
+            keyword= tolower(as.character(item))
+          )
+        )   
+      })
+  }
+}
+
+d_ply(events, .(date, keywords, event_id), add_keyword )
+
+head(keywords, n = 20)
+```
+
+Que faire des mots-clés s'appliquant à des événements qui se répètent dans le temps. Nous proposons de les pondérer de la façon suivante :
+
+1. 1/(nombre de dates)
+
+```{r}
+
+weights <- as.data.frame(sapply(
+    keywords$event_id,
+    function(e){
+      1/nrow(keywords[ keywords$event_id == e, ])
+    }))
+
+mean_date <- as.data.frame(sapply(
+    keywords$keyword,
+    function(e){
+      mean(keywords[ keywords$keyword == e, ]$date)
+    }))
+
+keywords.aggregate <- cbind(keywords, weights)
+keywords.aggregate <- cbind(keywords.aggregate, mean_date)
+
+colnames(keywords.aggregate)[4] <- c("weight")
+colnames(keywords.aggregate)[5] <- c("mean_date")
+
+rm(mean_date, weights)
+
+head(keywords.aggregate)
+```
+
+
+Cela permet de reconstituer un poid de 1 quand on fait la somme de tous les événements dans le temps.
+
+Permet également d'"étaler" le poid des évènements.
+
+Est-ce qu'on ne perd pas la "densité" ?
+
+```{r distribution_overtime, fig.height=100,  fig.width= 12, warning=FALSE}
+library(ggplot2)
+theme_set(theme_bw())
+
+t <- keywords.aggregate[ keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < as.Date("2013-12-31"), ]
+
+ggplot(t) +
+  aes(x = date, y = reorder(keyword, mean_date), size = weight, color = reorder(keyword, mean_date)) +
+  geom_point() +
+  theme(legend.position = "none")
+
+rm(t)
+```
