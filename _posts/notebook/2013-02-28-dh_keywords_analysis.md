@@ -7,6 +7,8 @@ tags:
 
 layout: default
 ---
+dh.events : Analyse de mots clés
+--------------------------------
 
 ## transformation des données de base
 
@@ -179,20 +181,9 @@ theme_set(theme_bw())
 
 t <- keywords.aggregate[keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < 
     as.Date("2013-12-31"), ]
-l <- levels(keywords$keyword)
-
 
 ggplot(t) + aes(x = date, y = reorder(keyword, mean_date), size = weight, color = reorder(keyword, 
-    mean_date)) + geom_point(position = "dodge") + opts(legend.position = "none")
-```
-
-```
-## 'opts' is deprecated. Use 'theme' instead. (Deprecated; last used in
-## version 0.9.1)
-```
-
-```
-## ymax not defined: adjusting position using y instead
+    mean_date)) + geom_point() + theme(legend.position = "none")
 ```
 
 ![plot of chunk distribution_overtime](figure/distribution_overtime.png) 
