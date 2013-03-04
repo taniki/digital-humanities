@@ -195,6 +195,8 @@ Permet également d'"étaler" le poid des évènements.
 
 Est-ce qu'on ne perd pas la "densité" ?
 
+## visualisations et analyse
+
 
 ```r
 library(ggplot2)
@@ -208,6 +210,38 @@ ggplot(t) + aes(x = date, y = reorder(keyword, mean_date), size = weight, color 
 ```
 
 ![plot of chunk distribution_overtime](figure/distribution_overtime.png) 
+
+```r
+
+rm(t)
+```
+
+
+### top 25
+
+
+```r
+library(ggplot2)
+theme_set(theme_bw())
+
+t <- keywords.aggregate[keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < 
+    as.Date("2013-12-31"), ]
+
+keywords.aggregate_count <- as.data.frame(table(unlist(keywords$keyword)))
+
+colnames(keywords.aggregate_count)[1] <- c("keyword")
+colnames(keywords.aggregate_count)[2] <- c("count")
+
+keywords.aggregate_count <- keywords.aggregate_count[order(-keywords.aggregate_count$count), 
+    ]
+
+t <- subset(t, keyword %in% keywords.aggregate_count[1:50, 1])
+
+ggplot(t) + aes(x = date, y = reorder(keyword, mean_date), size = weight, color = reorder(keyword, 
+    mean_date), alpha = 0.7) + geom_point() + theme(legend.position = "none")
+```
+
+![plot of chunk distribution_top50_time](figure/distribution_top50_time.png) 
 
 ```r
 
