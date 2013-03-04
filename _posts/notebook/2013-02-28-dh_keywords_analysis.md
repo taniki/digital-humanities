@@ -7,8 +7,6 @@ tags:
 
 layout: default
 ---
-dh.events : Analyse de mots clés
---------------------------------
 
 ## transformation des données de base
 
@@ -130,6 +128,8 @@ head(keywords, n = 20)
 ```
 
 
+### pondération des événements qui se répètent
+
 Que faire des mots-clés s'appliquant à des événements qui se répètent dans le temps. Nous proposons de les pondérer de la façon suivante :
 
 1. 1/(nombre de dates)
@@ -141,31 +141,52 @@ weights <- as.data.frame(sapply(keywords$event_id, function(e) {
     1/nrow(keywords[keywords$event_id == e, ])
 }))
 
+keywords.aggregate <- cbind(keywords, weights)
+
+colnames(keywords.aggregate)[4] <- c("weight")
+
+rm(weights)
+
+head(keywords.aggregate[, c("keyword", "weight")])
+```
+
+```
+##         keyword weight
+## 1 communication   1.00
+## 2 organisations   0.50
+## 3 communication   0.50
+## 4     éducation   1.00
+## 5     recherche   1.00
+## 6 communication   0.25
+```
+
+
+### calcul de la date moyenne
+
+
+```r
 mean_date <- as.data.frame(sapply(keywords$keyword, function(e) {
     mean(keywords[keywords$keyword == e, ]$date)
 }))
 
-keywords.aggregate <- cbind(keywords, weights)
 keywords.aggregate <- cbind(keywords.aggregate, mean_date)
 
-colnames(keywords.aggregate)[4] <- c("weight")
 colnames(keywords.aggregate)[5] <- c("mean_date")
 
-rm(mean_date, weights)
+rm(mean_date)
 
-head(keywords.aggregate)
+head(keywords.aggregate[, c("keyword", "mean_date")])
 ```
 
 ```
-##                    event_id       date       keyword weight mean_date
-## 1 http://calenda.org/197623 2004-10-15 communication   1.00     14926
-## 2 http://calenda.org/197736 2005-04-30 organisations   0.50     12903
-## 3 http://calenda.org/197736 2005-04-30 communication   0.50     14926
-## 4 http://calenda.org/198145 2007-05-10     éducation   1.00     15310
-## 5 http://calenda.org/198202 2007-10-15     recherche   1.00     15077
-## 6 http://calenda.org/198481 2008-09-09 communication   0.25     14926
+##         keyword mean_date
+## 1 communication     14926
+## 2 organisations     12903
+## 3 communication     14926
+## 4     éducation     15310
+## 5     recherche     15077
+## 6 communication     14926
 ```
-
 
 
 Cela permet de reconstituer un poid de 1 quand on fait la somme de tous les événements dans le temps.
@@ -183,7 +204,7 @@ t <- keywords.aggregate[keywords.aggregate$date > as.Date("2009-01-01") & keywor
     as.Date("2013-12-31"), ]
 
 ggplot(t) + aes(x = date, y = reorder(keyword, mean_date), size = weight, color = reorder(keyword, 
-    mean_date)) + geom_point() + theme(legend.position = "none")
+    mean_date), alpha = 0.7) + geom_point() + theme(legend.position = "none")
 ```
 
 ![plot of chunk distribution_overtime](figure/distribution_overtime.png) 

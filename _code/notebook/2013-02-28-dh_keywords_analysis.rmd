@@ -45,6 +45,8 @@ d_ply(events, .(date, keywords, event_id), add_keyword )
 head(keywords, n = 20)
 ```
 
+### pondération des événements qui se répètent
+
 Que faire des mots-clés s'appliquant à des événements qui se répètent dans le temps. Nous proposons de les pondérer de la façon suivante :
 
 1. 1/(nombre de dates)
@@ -57,23 +59,32 @@ weights <- as.data.frame(sapply(
       1/nrow(keywords[ keywords$event_id == e, ])
     }))
 
+keywords.aggregate <- cbind(keywords, weights)
+
+colnames(keywords.aggregate)[4] <- c("weight")
+
+rm(weights)
+
+head(keywords.aggregate[, c("keyword", "weight")])
+```
+
+### calcul de la date moyenne
+
+```{r}
 mean_date <- as.data.frame(sapply(
     keywords$keyword,
     function(e){
       mean(keywords[ keywords$keyword == e, ]$date)
     }))
 
-keywords.aggregate <- cbind(keywords, weights)
 keywords.aggregate <- cbind(keywords.aggregate, mean_date)
 
-colnames(keywords.aggregate)[4] <- c("weight")
 colnames(keywords.aggregate)[5] <- c("mean_date")
 
-rm(mean_date, weights)
+rm(mean_date)
 
-head(keywords.aggregate)
+head(keywords.aggregate[, c("keyword", "mean_date")])
 ```
-
 
 Cela permet de reconstituer un poid de 1 quand on fait la somme de tous les événements dans le temps.
 
@@ -88,7 +99,7 @@ theme_set(theme_bw())
 t <- keywords.aggregate[ keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < as.Date("2013-12-31"), ]
 
 ggplot(t) +
-  aes(x = date, y = reorder(keyword, mean_date), size = weight, color = reorder(keyword, mean_date)) +
+  aes(x = date, y = reorder(keyword, mean_date), size = weight, color = reorder(keyword, mean_date), alpha = 0.7) +
   geom_point() +
   theme(legend.position = "none")
 
