@@ -56,7 +56,7 @@ Que faire des mots-clés s'appliquant à des événements qui se répètent dans
 weights <- as.data.frame(sapply(
     keywords$event_id,
     function(e){
-      1/nrow(keywords[ keywords$event_id == e, ])
+      1/nrow(events[ events$event_id == e, ])
     }))
 
 keywords.aggregate <- cbind(keywords, weights)
@@ -64,6 +64,10 @@ keywords.aggregate <- cbind(keywords, weights)
 colnames(keywords.aggregate)[4] <- c("weight")
 
 rm(weights)
+
+# vérification
+# aggregate( keywords.aggregate$weight, list( kw = keywords.aggregate$keyword, id = keywords.aggregate$event_id), sum  )
+# doit renvoyer un tableau de kws = 1
 
 head(keywords.aggregate[, c("keyword", "weight")])
 ```
@@ -116,7 +120,9 @@ viz.timeline <- function(dataset){
 ### distribution journalière du top 50
 
 ```{r distribution_top50_time, fig.height=7,  fig.width= 12, warning=FALSE}
-t <- keywords.aggregate[ keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < as.Date("2013-12-31"), ]
+# t <- keywords.aggregate[ keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < as.Date("2013-12-31"), ]
+
+t <- keywords.aggregate
 
 keywords.count <- as.data.frame(table(unlist( keywords$keyword )))
 
@@ -129,7 +135,8 @@ head(keywords.count, n=10)
 
 t <- subset(t, keyword %in% keywords.count[1:50, 1])
 
-viz.timeline(t)
+viz.timeline(t) +
+  xlim(as.Date("2009-01-01"), as.Date("2013-12-31"))
 
 rm(t)
 ```
@@ -138,7 +145,36 @@ C'est joli mais on n'y voit pas forcément plus clair sur les patterns et la chr
 
 ## patterns de distribution mensuelle
 
+```{r distribution_top50_time_monthly, fig.height=7,  fig.width= 12}
+keywords.count.by_month <- aggregate(
+  keywords.aggregate$weight,
+  list(
+    keyword = keywords.aggregate$keyword,
+    mean_date = keywords.aggregate$mean_date,
+    date = as.Date(format(keywords.aggregate$date, "%Y-%m-01"))),
+  sum)
+
+colnames(keywords.count.by_month)[4]  <- c("weight")
+
+head(keywords.count.by_month[order(-keywords.count.by_month$weight) , ], n = 10)
+
+viz.timeline(subset(keywords.count.by_month, keyword %in% keywords.count[1:50, 1])) +
+  xlim(as.Date("2009-01-01"), as.Date("2013-12-31"))
+```
+
+### mois le plus actif
+
 ```{r}
+months.weight <- aggregate(
+  keywords.count.by_month$weight,
+  list(
+    date = keywords.count.by_month$date
+  ),
+  sum)
+  
+colnames(months.weight)[2]  <- c("weight")
+
+months.weight[ order(-months.weight$weight), ][1:10,]
 ```
 
 ## Appendices
