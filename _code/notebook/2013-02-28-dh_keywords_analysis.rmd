@@ -103,9 +103,9 @@ theme_set(theme_bw())
 viz.timeline <- function(dataset){
   ggplot(dataset) +
     aes(x = date,
-        y = reorder(keyword, mean_date),
+        y = reorder(keyword, -mean_date),
         size = weight,
-        color = reorder(keyword, mean_date),
+        color = reorder(keyword, -mean_date),
         alpha = 0.7) +
     geom_point() +
     scale_y_discrete(name="") +
