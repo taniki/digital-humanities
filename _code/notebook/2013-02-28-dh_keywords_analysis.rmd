@@ -118,20 +118,27 @@ viz.timeline <- function(dataset){
 ```{r distribution_top50_time, fig.height=7,  fig.width= 12, warning=FALSE}
 t <- keywords.aggregate[ keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < as.Date("2013-12-31"), ]
 
-keywords.aggregate_count <- as.data.frame(table(unlist( keywords$keyword )))
+keywords.count <- as.data.frame(table(unlist( keywords$keyword )))
 
-colnames(keywords.aggregate_count)[1] <- c("keyword")
-colnames(keywords.aggregate_count)[2] <- c("count")
+colnames(keywords.count)[1] <- c("keyword")
+colnames(keywords.count)[2] <- c("count")
 
-keywords.aggregate_count <- keywords.aggregate_count[ order(-keywords.aggregate_count$count), ]
+keywords.count <- keywords.count[ order(-keywords.count$count), ]
 
-head(keywords.aggregate_count, n=10)
+head(keywords.count, n=10)
 
-t <- subset(t, keyword %in% keywords.aggregate_count[1:50, 1])
+t <- subset(t, keyword %in% keywords.count[1:50, 1])
 
 viz.timeline(t)
 
 rm(t)
+```
+
+C'est joli mais on n'y voit pas forcément plus clair sur les patterns et la chronologie du champ sémantique. On peut en tout cas voir que les chercheurs du champ sont du genre à profiter des grandes vacances pour ne pas communiquer.
+
+## patterns de distribution mensuelle
+
+```{r}
 ```
 
 ## Appendices
