@@ -22,5 +22,5 @@ em { font-style: italic }
 
 pre { margin : 0.5em 0;}
 code { padding : 0.5em; font-family: Consolas, "Liberation Mono", Courier, monospace; font-size : 12px; line-height: 1.5em;  display: block; }
-code.r { background-color : #f0f0f0; }
+code.r { background-color : #f3f3f3; }
 code.text { border : 1px solid #eee; }

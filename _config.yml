@@ -10,4 +10,4 @@ pygments: true
 exclude: ["CNAME"]
 
 redcarpet:
-  extensions: [ "with_toc_data" ]
+  with_toc_data: true
