@@ -8,6 +8,11 @@ tags:
 layout: default
 ---
 
+```{r global_setup, echo=FALSE, warning=FALSE, cache=FALSE}
+opts_chunk$set(dev="CairoPNG")
+render_jekyll()
+```
+
 Ce codebook a pour objectif de prédéfinir une étude sur la position des *digital humanities* dans le paysage des plateformes d'équipement méthodologiques. La question du rapport entre "humanities" américaines et "sciences humaines et sociales" (francaises et européennes) est mise temporairement de côté.
 
 Les outils que nous proposons ici sont :

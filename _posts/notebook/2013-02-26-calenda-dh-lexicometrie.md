@@ -1,14 +1,15 @@
 ---
 title: Une analyse des évenements en SHS en Python et R
+date: 2013-02-27
 
 tags:
   - outils
-  - code
-  - r
-  - lexicometry
 
 layout: default
 ---
+
+
+
 
 Ce codebook a pour objectif de prédéfinir une étude sur la position des *digital humanities* dans le paysage des plateformes d'équipement méthodologiques. La question du rapport entre "humanities" américaines et "sciences humaines et sociales" (francaises et européennes) est mise temporairement de côté.
 
@@ -41,33 +42,43 @@ Le dataset de base de cette analyse sera donc un fichier json du type `dates_eve
 ### faire rentrer les données dans R
 
 
-```r
+{% highlight r %}
 library("rjson")
 library("plyr")
 library("zoo")
-```
+{% endhighlight %}
 
-```
+
+
+{% highlight text %}
 ## Attaching package: 'zoo'
-```
+{% endhighlight %}
 
-```
+
+
+{% highlight text %}
 ## The following object(s) are masked from 'package:base':
 ## 
 ## as.Date, as.Date.numeric
-```
+{% endhighlight %}
 
-```r
+
+
+{% highlight r %}
 
 json_file <- "../dates_events.json"
 json_data <- fromJSON(readLines(json_file))
-```
+{% endhighlight %}
 
-```
+
+
+{% highlight text %}
 ## Warning: incomplete final line found on '../dates_events.json'
-```
+{% endhighlight %}
 
-```r
+
+
+{% highlight r %}
 
 events <- ldply(json_data, data.frame)
 events$count <- rep(1, nrow(events))
@@ -90,25 +101,29 @@ events.count_by_month <- merge(data.frame(ym = g), data.frame(ym = as.yearmon(t$
 rm(t, z, g)
 
 head(events.count_by_month[order(-events.count_by_month$count), ], n = 12)
-```
+{% endhighlight %}
 
-```
-##           ym count
-## 177 Oct 0015     9
-## 288 Jan 0025     9
-## 360 Jan 0031     6
-## 165 Oct 0014     5
-## 170 Mar 0015     5
-## 171 Apr 0015     5
-## 173 Jun 0015     5
-## 179 Dec 0015     5
-## 214 Nov 0018     5
-## 326 Mar 0028     5
-## 328 May 0028     5
-## 350 Mar 0030     5
-```
 
-```r
+
+{% highlight text %}
+##          ym count
+## 95 Mar 2012    35
+## 93 Jan 2012    30
+## 98 Jun 2012    29
+## 91 Nov 2011    24
+## 97 May 2012    23
+## 90 Oct 2011    22
+## 96 Apr 2012    21
+## 83 Mar 2011    18
+## 84 Apr 2011    17
+## 94 Feb 2012    17
+## 78 Oct 2010    16
+## 81 Jan 2011    16
+{% endhighlight %}
+
+
+
+{% highlight r %}
 
 kw <- unique(data.frame(event_id = events$event_id, keywords = events$keywords))
 kw <- subset(kw, keywords != "")
@@ -120,9 +135,11 @@ keywords.freq <- as.data.frame(table(unlist(kw)))
 rm(kw, json_data, json_file)
 
 head(keywords.freq[order(-keywords.freq$Freq), ], n = 12)
-```
+{% endhighlight %}
 
-```
+
+
+{% highlight text %}
 ##                     Var1 Freq
 ## 160   digital humanities   58
 ## 325             internet   19
@@ -136,7 +153,7 @@ head(keywords.freq[order(-keywords.freq$Freq), ], n = 12)
 ## 28              archives   12
 ## 615                  tei   12
 ## 445         numérisation   11
-```
+{% endhighlight %}
 
 
 ### nettoyage des données avec open refine
@@ -146,9 +163,9 @@ head(keywords.freq[order(-keywords.freq$Freq), ], n = 12)
 ### temporalités
 
 
-```r
+{% highlight r %}
 plot(events.count_by_month)
-```
+{% endhighlight %}
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
@@ -163,19 +180,23 @@ Pour le sport :
 ### fréquence des mots clés
 
 
-```r
+{% highlight r %}
 library("ggplot2")
 
+theme_set(theme_bw())
+
 keywords.freq.top50 <- transform(keywords.freq[order(-keywords.freq$Freq), ][1:50, 
-    ], Var1 = reorder(Var1, -Freq))
+    ], Var1 = reorder(Var1, Freq))
 
 # barplot( keywords.freq$Freq[ order( - keywords.freq$Freq ) ][1:50],
 # names.arg = keywords.freq$Var1[ order( - keywords.freq$Freq ) ][1:50],
 # las = 2, cex.names = 0.5, horiz = TRUE )
 
 ggplot(keywords.freq.top50, aes(x = Var1, y = Freq)) + geom_bar(stat = "identity") + 
-    theme(axis.text.x = element_text(angle = 90, hjust = 1))
-```
+    # theme( axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5) )
+# +
+coord_flip()
+{% endhighlight %}
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
@@ -189,3 +210,8 @@ ggplot(keywords.freq.top50, aes(x = Var1, y = Freq)) + geom_bar(stat = "identity
 - détection des entités nommées
 
 ## todo
+
+
+{% highlight r %}
+save(list = c("events"), file = "calenda-dh.RData")
+{% endhighlight %}

@@ -1,12 +1,22 @@
 dh.events : Analyse de mots clés
 --------------------------------
 
+```{r global_setup, echo=FALSE, warning=FALSE, cache=FALSE}
+opts_chunk$set(dev="CairoPNG")
+render_jekyll()
+```
+
 ## transformation des données de base
 
 Nous allons reprendre les données structurées de l'extraction des événements de calenda pour construire des jeux de données de séries temporelles et co-occurrences de mots-clés.
 
 ```{r}
 load('data/calenda-dh.RData')
+```
+
+```{r}
+# détection des doublons
+events <- events[!duplicated(events[, c("date", "title")]), ]
 
 head(events, n=12)
 ```
@@ -18,7 +28,6 @@ m = somme de nombre de mots clés pour les mots événements i = 0..n
 Cela sera également l'occasion de se frotter un peu à la librairie [plyr](http://plyr.had.co.nz/) spécialisé dans la manipulation de données
 
 ```{r}
-library("rjson")
 library("plyr")
 library("zoo")
 
@@ -41,6 +50,9 @@ add_keyword <- function(row){
 }
 
 d_ply(events, .(date, keywords, event_id), add_keyword )
+
+# remove duplicate keywords
+keywords <- keywords[!duplicated(keywords),]
 
 head(keywords, n = 20)
 ```
@@ -96,7 +108,29 @@ Permet également d'"étaler" le poid des évènements.
 
 Est-ce qu'on ne perd pas la "densité" ?
 
-## visualisations et analyse
+## Top 10
+
+```{r}
+keywords.count <- as.data.frame(table(unlist( keywords$keyword )))
+
+colnames(keywords.count)[1] <- c("keyword")
+colnames(keywords.count)[2] <- c("count")
+
+keywords.count <- keywords.count[ order(-keywords.count$count), ]
+
+head(keywords.count, n=10)
+```
+
+
+Rien de notable dans l'analyse du top 10. "digital humanities" (n=`r keywords.count[ keywords.count$keyword == c("digital humanities"), ]$count`) ressort grand vainqueur mais talonné par web+internet (n=`r sum(keywords.count[ keywords.count$keyword == c("internet", "web"), ]$count)`). A voir avec l'hypothèse que l'émergence du champ est possible à cause de l'existence d'une infrastructure adéquat (l'internet) qu'il soit compris ou non par les acteurs mais permet une stratégie de champ masqué.
+
+On y retrouve également les tensions habituelles dans la traduction de "digital" qui peut se transformer en "numérique" :
+
+- "humanités digitales" : `r keywords.count[ keywords.count$keyword == c("humanités digitales"), ]$count`
+- "humanités numériques" : `r keywords.count[ keywords.count$keyword == c("humanités numériques"), ]$count`
+
+- "digital" : `r keywords.count[ keywords.count$keyword == c("digital"), ]$count`
+- "numérique" : `r keywords.count[ keywords.count$keyword == c("numérique"), ]$count`
 
 ## pattern de visualisation des distributions journalières
 
@@ -122,18 +156,20 @@ viz.timeline <- function(dataset){
 ```{r distribution_top50_time, fig.height=7,  fig.width= 12, warning=FALSE}
 # t <- keywords.aggregate[ keywords.aggregate$date > as.Date("2009-01-01") & keywords.aggregate$date < as.Date("2013-12-31"), ]
 
-t <- keywords.aggregate
+t <- subset(keywords.aggregate, keyword %in% keywords.count[1:50, 1])
 
-keywords.count <- as.data.frame(table(unlist( keywords$keyword )))
+t <- aggregate(
+  t$weight,
+  list(
+    weight = t$weight,
+    date = t$date,
+    mean_date = t$mean_date,
+    keyword = t$keyword),
+  sum)
 
-colnames(keywords.count)[1] <- c("keyword")
-colnames(keywords.count)[2] <- c("count")
+# ca aurait pu être utile s'il y avait des cas d'événements qui se superposent ET qui utilisent les mêmes mots clés
+t[ t$weight > 1 , ]
 
-keywords.count <- keywords.count[ order(-keywords.count$count), ]
-
-head(keywords.count, n=10)
-
-t <- subset(t, keyword %in% keywords.count[1:50, 1])
 
 viz.timeline(t) +
   xlim(as.Date("2009-01-01"), as.Date("2013-12-31"))
@@ -142,6 +178,38 @@ rm(t)
 ```
 
 C'est joli mais on n'y voit pas forcément plus clair sur les patterns et la chronologie du champ sémantique. On peut en tout cas voir que les chercheurs du champ sont du genre à profiter des grandes vacances pour ne pas communiquer.
+
+### conflits dans la disponibilité des dates
+
+```{r}
+events.duplicated_date <- events[ duplicated(events[, c("date")]) | duplicated(events[, c("date")], fromLast=TRUE), c("date", "title")]
+events.duplicated_date <- events.duplicated_date[ order(events.duplicated_date$date), ]
+```
+
+On peut voir que `r nrow(events.duplicated_date)` ont lieu un jour où un autre événement à lieu. Cela concerne exactement `r length(unique(events.duplicated_date$date))` jours. Soit `r nrow(events.duplicated_date)/length(unique(events.duplicated_date$date))` événements par lors des journées chargées en communications.
+
+```{r}
+keywords.duplicated_date <- keywords[ duplicated( keywords[, c("date", "keyword")]) | duplicated( keywords[, c("date", "keyword")], fromLast=TRUE), ]
+
+keywords.duplicated_date$keyword
+
+head(keywords.duplicated_date)
+```
+
+`r length(unique(keywords.duplicated_date$keyword))` mots-clés ont été choisi pour des événements concurrents dispersés sur `r length(unique(keywords.duplicated_date$date))` dates différentes. Parmi ceux-ci, on retrouve en bonnes places les usual suspects.
+
+hypothèses :
+
+- les chercheurs sont des feignassent et placent des événements aléatoirement mais en fonction de critères arbitraires communs comme la préférence pour la fin de semaine, le mercredi etc
+
+---
+Analyse fausse :
+
+pourtant aucun ne semble poser de conflits en termes de mots clés, on peut donc poser l'hypothèse que les acteurs qui programment des événements concurrents le font :
+
+1. avec la conscience de ne pas empiéter sur un territoire
+2. font parti de régimes discursifs clos qui ne communiquent pas et ainsi n'ont pas conscience de la simultanéité d'autres événements
+3. une concurrence intentionnelle marquée d'une stratégie d'originalité
 
 ## patterns de distribution mensuelle
 

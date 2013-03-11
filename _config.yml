@@ -1,7 +1,13 @@
 title: "a socio-technical study of digital humanities platforms landscape"
+permalink: none
+
 server: true
 auto: true
-permalink: none
+
 markdown: redcarpet
-pygments: false
+pygments: true
+
 exclude: ["CNAME"]
+
+redcarpet:
+  extensions: [ "with_toc_data" ]
